@@ -15,7 +15,41 @@
   function focusTitle(container){const title=container.querySelector('h1,h2');if(title){title.tabIndex=-1;title.focus({preventScroll:true});}}
   function heading(title,subtitle,extra=''){return `<div class="page-heading"><div><p class="eyebrow">KHÔNG GIAN CỦA BẠN</p><h1>${title}</h1><p>${subtitle}</p></div>${extra}</div>`;}
   function empty(title,description,route,label){return `<div class="card empty-state">${icon('book')}<h2>${title}</h2><p>${description}</p>${route?`<a class="button primary" href="#${route}">${label} ${icon('arrow')}</a>`:''}</div>`;}
-  function showAuth(register=false){showScreen('auth-screen');$('auth-screen').innerHTML=`<div class="auth-art">${brand}<div class="auth-art-copy"><div class="sculpture" aria-hidden="true"><div class="orb"></div><div class="floating-word"><strong>grow</strong><small>/ɡrəʊ/ · tiến bộ mỗi ngày</small></div><div class="floating-word second"><strong>✧ A little, every day.</strong><small>Một chút hôm nay. Khác biệt ngày mai.</small></div><span class="tiny-spark">✳</span></div><p class="eyebrow">MỘT KHỞI ĐẦU NHỎ. MỘT HÀNH TRÌNH LỚN.</p><h1>Học cùng AI.<br><em>Tiến bộ theo cách bạn.</em></h1><p>Biến những từ mới thành điều bạn thực sự hiểu, nhớ và dùng được.</p></div><div class="auth-foot"><span>DÀNH CHO HỌC SINH LỚP 11</span><span>Hỏi · Hiểu · Ghi nhớ</span></div></div><div class="auth-form-side"><div class="auth-inner"><p class="eyebrow">CHÀO MỪNG ĐẾN SỔ TAY AI</p><h2>${register?'Bắt đầu hành trình của bạn.':'Rất vui được gặp lại bạn.'}</h2><p class="subtext">${register?'Một tài khoản, một không gian học của riêng bạn.':'Đăng nhập để tiếp tục từ nơi bạn đã dừng lại.'}</p><p class="notice local-notice">Bản GitHub Pages: hồ sơ và tiến độ chỉ lưu trên trình duyệt này. Không đồng bộ sang máy khác; xóa dữ liệu website sẽ xóa hồ sơ. Mật khẩu hồ sơ không thay thế bảo mật tài khoản trực tuyến.</p><div class="auth-tabs" role="tablist" aria-label="Chọn đăng nhập hoặc đăng ký"><button type="button" role="tab" aria-selected="${!register}" data-action="login-tab">Đăng nhập</button><button type="button" role="tab" aria-selected="${register}" data-action="register-tab">Tạo tài khoản</button></div><form id="auth-form" data-register="${register}">${register?'<label>Tên hiển thị<input name="name" autocomplete="nickname" required minlength="2" maxlength="32" placeholder="Bạn muốn được gọi là gì?"></label>':''}<label>Tên đăng nhập<input name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="30" pattern="[A-Za-z0-9_.\-]+" placeholder="Ví dụ: minh.anh11"></label><label>Mật khẩu<input type="password" name="password" autocomplete="${register?'new-password':'current-password'}" required minlength="8" maxlength="128" placeholder="Tối thiểu 8 ký tự"></label>${register?'<label class="check-label"><input type="checkbox" required><span>Tôi hiểu hồ sơ và tiến độ chỉ lưu trên trình duyệt này.</span></label>':''}<p class="form-status" id="auth-status" role="status"></p><button class="button primary full" type="submit">${register?'Tạo tài khoản của tôi':'Đăng nhập'} ${icon('arrow')}</button></form><p class="auth-note">Không cần email. Hãy ghi nhớ tên đăng nhập và mật khẩu.</p><div class="auth-micro">${icon('shield')}<span>Hồ sơ trên máy, không phải tài khoản đám mây.<br>Bảng xếp hạng chỉ gồm hồ sơ trong trình duyệt này.</span></div></div></div>`;}
+  function showAuth(register=false){
+    showScreen('auth-screen');
+    const local=!!window.studyLocal;
+    const storageSummary=local?'Hồ sơ lưu trên trình duyệt này':'Tiến độ được lưu theo tài khoản';
+    const storageDetail=local?'Hồ sơ, flashcard và tiến độ chỉ nằm trong trình duyệt này, không tự đồng bộ sang thiết bị khác. Xóa dữ liệu website sẽ xóa hồ sơ. Mật khẩu hồ sơ không thay thế bảo mật tài khoản trực tuyến.':'Hồ sơ, flashcard và lịch ôn được lưu trên máy chủ website để bạn tiếp tục học khi đăng nhập lại.';
+    $('auth-screen').innerHTML=`<div class="auth-layout">
+      <div class="auth-art">
+        <div class="auth-brand-row">${brand}<span class="auth-edition">TIẾNG ANH 11</span></div>
+        <div class="auth-art-copy">
+          <p class="eyebrow auth-kicker"><span class="status-dot"></span>MỖI NGÀY, MỘT CHÚT TIẾN BỘ</p>
+          <h1>Học cùng AI.<br><em>Nhớ dài lâu.</em></h1>
+          <p class="auth-description">Một không gian nhỏ để hỏi rõ hơn,<br>hiểu sâu hơn và tự tin dùng từ mới.</p>
+          <div class="sculpture" aria-hidden="true"><div class="auth-orbit orbit-a"></div><div class="auth-orbit orbit-b"></div><div class="orb"></div><div class="floating-word"><span class="word-card-label">TỪ MỚI, CƠ HỘI MỚI</span><strong>grow <span>↗</span></strong><small>/ɡrəʊ/ · tiến bộ, trưởng thành</small></div><div class="floating-word second"><span class="word-card-spark">✧</span><div><strong>A little, every day.</strong><small>Một chút hôm nay. Khác biệt ngày mai.</small></div></div><span class="tiny-spark">✳</span></div>
+        </div>
+        <div class="auth-learning-path"><span><i>01</i>Hỏi rõ</span><b>·</b><span><i>02</i>Tự luyện</span><b>·</b><span><i>03</i>Nhớ lâu</span></div>
+      </div>
+      <div class="auth-form-side"><div class="auth-inner">
+        <span class="auth-welcome-symbol" aria-hidden="true">✳</span>
+        <p class="eyebrow">${register?'MỘT KHỞI ĐẦU DÀNH RIÊNG CHO BẠN':'CHÀO MỪNG BẠN TRỞ LẠI'}</p>
+        <h2>${register?'Bắt đầu điều mới.':'Tiếp tục hành trình.'}</h2>
+        <p class="auth-subtitle">${register?'Tạo hồ sơ và bắt đầu từ một từ mới hôm nay.':'Một chút tập trung hôm nay, thêm tự tin ngày mai.'}</p>
+        <div class="auth-tabs" role="tablist" aria-label="Chọn đăng nhập hoặc đăng ký"><button type="button" role="tab" aria-selected="${!register}" data-action="login-tab">Đăng nhập</button><button type="button" role="tab" aria-selected="${register}" data-action="register-tab">Tạo tài khoản</button></div>
+        <form id="auth-form" data-register="${register}">
+          ${register?'<label for="auth-name">Tên hiển thị</label><div class="auth-input-wrap">'+icon('user')+'<input id="auth-name" name="name" autocomplete="nickname" required minlength="2" maxlength="32" placeholder="Bạn muốn được gọi là gì?"></div>':''}
+          <label for="auth-username">Tên đăng nhập</label><div class="auth-input-wrap">${icon('user')}<input id="auth-username" name="username" autocomplete="username" autocapitalize="none" spellcheck="false" required minlength="3" maxlength="30" placeholder="Ví dụ: minh.anh11"></div>
+          <label for="auth-password">Mật khẩu</label><div class="auth-input-wrap password-wrap">${icon('shield')}<input id="auth-password" type="password" name="password" autocomplete="${register?'new-password':'current-password'}" required minlength="8" maxlength="128" placeholder="Tối thiểu 8 ký tự"><button type="button" class="password-toggle" data-action="toggle-password" aria-label="Hiện mật khẩu" aria-pressed="false">Hiện</button></div>
+          ${register?'<label class="check-label auth-consent"><input type="checkbox" required><span>'+ (local?'Tôi hiểu hồ sơ và tiến độ được lưu trên trình duyệt này.':'Tôi hiểu tiến độ học được lưu theo tài khoản.')+'</span></label>':''}
+          <p class="form-status" id="auth-status" role="status"></p>
+          <button class="button primary full auth-submit" type="submit"><span>${register?'Tạo tài khoản của tôi':'Vào không gian học'}</span>${icon('arrow')}</button>
+        </form>
+        <p class="auth-note">Không cần email. Chỉ cần một chút tò mò.</p>
+        <details class="auth-storage"><summary>${icon('shield')}<span>${storageSummary}</span><span class="storage-plus" aria-hidden="true">＋</span></summary><p>${storageDetail} ${local?'Bảng xếp hạng chỉ gồm các hồ sơ trên cùng trình duyệt.':'Bạn tự chọn có hiển thị trên bảng xếp hạng hay không.'}</p><p>Hãy ghi nhớ tên đăng nhập và mật khẩu của bạn.</p></details>
+      </div><p class="auth-panel-footer">HỌC CHỦ ĐỘNG <span>✦</span> TIẾN BỘ MỖI NGÀY</p></div>
+    </div>`;
+  }
   const introSlides=[
     {eyebrow:'01 / NHÌN LẠI CÁCH MÌNH HỌC',title:'Bạn đang dùng AI.<br>Nhưng đã <em>thực sự học?</em>',text:'Một câu trả lời đến rất nhanh. Nhưng kiến thức chỉ ở lại khi bạn hiểu và tự mình sử dụng nó.',chips:['Có đáp án ≠ đã hiểu','Tư duy vẫn là của bạn']},
     {eyebrow:'02 / ĐIỀU GÌ ĐANG GIỮ BẠN LẠI?',title:'Bạn thấy mình<br>trong <em>tình huống nào?</em>',text:'Chọn điều gần với bạn nhất. Chúng ta sẽ bắt đầu từ đó.',chips:['Học theo cách của bạn','Không cần hoàn hảo']},
@@ -101,6 +135,7 @@
       if(b.dataset.rankPeriod){rankPeriod=b.dataset.rankPeriod;return renderRoute();}
       if(b.dataset.aiPrompt){if(!aiConfigured){toast('Mây AI chưa được kết nối. Bạn có thể dùng Công cụ AI để ghép prompt.');return;}$('chat-input').value=b.dataset.aiPrompt;$('chat-input').focus();return;}
       const action=b.dataset.action;
+      if(action==='toggle-password'){const field=$('auth-password');const show=field.type==='password';field.type=show?'text':'password';b.textContent=show?'Ẩn':'Hiện';b.setAttribute('aria-label',show?'Ẩn mật khẩu':'Hiện mật khẩu');b.setAttribute('aria-pressed',String(show));}
       if(action==='login-tab')showAuth(false);
       if(action==='register-tab')showAuth(true);
       if(action==='retry')renderRoute();
