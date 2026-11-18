@@ -1,9 +1,10 @@
 (() => {
   'use strict';
   const systemMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  let preference='system';
-  try {preference=localStorage.getItem('so-tay-motion')||'system';} catch {}
-  if(!['system','full','reduced'].includes(preference))preference='system';
+  // Full motion is the product default; explicit saved preferences still win.
+  let preference='full';
+  try {preference=localStorage.getItem('so-tay-motion')||'full';} catch {}
+  if(!['system','full','reduced'].includes(preference))preference='full';
   document.documentElement.dataset.motion=preference;
   const reduced={get matches(){return preference==='reduced'||preference==='system'&&systemMotion.matches;}};
   const precise = matchMedia('(hover: hover) and (pointer: fine)');
