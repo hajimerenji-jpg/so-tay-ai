@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <rect x="1" y="1" width="62" height="62" rx="15" fill="#2e4b3b"/>
+  <!-- The spine and exposed paper form a closed notebook. -->
+  <path d="M21 12h24a5 5 0 0 1 5 5v31a6 6 0 0 1-6 6H22a8 8 0 0 1-8-8V20a8 8 0 0 1 7-8Z" fill="#f5e9cb"/>
+  <path d="M14 46a7 7 0 0 1 7-7h29v9a6 6 0 0 1-6 6H22a8 8 0 0 1-8-8Z" fill="#d4c5a0"/>
+  <path d="M23 13v22M19 45a4 4 0 0 1 4-3h26" fill="none" stroke="#9b835e" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M29 22h13m-13 6h9" fill="none" stroke="#355642" stroke-width="2.6" stroke-linecap="round"/>
+  <path d="M36 45h7v13l-3.5-2.8L36 58Z" fill="#bc784d"/>
+</svg>
